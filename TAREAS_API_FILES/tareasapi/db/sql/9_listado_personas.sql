@@ -1,0 +1,46 @@
+USE [VetaroRep]
+GO
+
+DROP VIEW [dbo].[VPersona]
+GO
+
+CREATE VIEW [dbo].[VPersona] AS  
+
+SELECT	CAST(PERSONAL.PERSONAL AS VARCHAR) AS id
+		, PERSONAL.APELLIDO AS apellido
+		, PERSONAL.NOMBRE	AS nombre
+		, PERSONAL.CUIL		AS cuil	
+		, SECCIONES.NOMBRE	AS seccion	
+		, PUESTOS.NOMBRE	AS puesto	
+		, PERSONAL.SECCION AS seccionId
+		, PERSONAL.PUESTO AS puestoId		
+FROM	PERSONAL
+WITH (NOLOCK)	
+LEFT JOIN	SECCIONES ON SECCIONES.SECCION = PERSONAL.SECCION 
+LEFT JOIN	PUESTOS ON PUESTOS.PUESTO = PERSONAL.PUESTO;
+GO
+
+
+SELECT	* FROM	VPersona WHERE	seccionId = 9 AND (puestoId IS NULL OR puestoId = 6) ORDER BY apellido, nombre;
+-- select personal, CUIL from PERSONAL 2024119-3463
+GO
+
+SELECT	* FROM	VPersona ORDER BY seccionId desc, apellido, nombre;
+GO
+
+SELECT id, cuil FROM	VPersona where seccionId = 3 ORDER BY seccionId desc, apellido, nombre;
+GO
+
+105	3814
+67	6145
+71	7407
+103	0988
+97	8949
+32	4464
+94	9330
+96	8422
+33	6301
+70	0819
+100	6246
+95	7253
+
